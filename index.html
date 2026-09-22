@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SleepGuardian — Privacy Policy</title>
+<style>
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 32px 20px 80px;
+    line-height: 1.6;
+    color: #1a1a1a;
+    background: #ffffff;
+  }
+  h1 { font-size: 1.8em; margin-bottom: 4px; }
+  .updated { color: #666; font-size: 0.9em; margin-bottom: 32px; }
+  h2 { font-size: 1.25em; margin-top: 2em; border-bottom: 1px solid #e5e5e5; padding-bottom: 6px; }
+  table { border-collapse: collapse; width: 100%; margin: 1em 0; }
+  th, td { text-align: left; padding: 8px 10px; border: 1px solid #e0e0e0; vertical-align: top; font-size: 0.95em; }
+  th { background: #f5f5f5; }
+  code { background: #f2f2f2; padding: 1px 5px; border-radius: 3px; font-size: 0.9em; }
+  a { color: #1a56db; }
+  ul { padding-left: 22px; }
+  .contact { background: #f8f9fb; border: 1px solid #e5e5e5; border-radius: 8px; padding: 16px 20px; margin-top: 2em; }
+</style>
+</head>
+<body>
+
+<h1>SleepGuardian — Privacy Policy</h1>
+<p class="updated">Last updated: September 2026</p>
+
+<p>
+SleepGuardian is a two-part app (a Wear OS watch app and a companion phone
+app) that detects when you fall asleep and automatically turns off your TV.
+This page explains what data the app uses, where it is stored, and what (if
+anything) ever leaves your devices.
+</p>
+
+<h2>The short version</h2>
+<ul>
+  <li>All of your data stays <strong>on your own watch and phone</strong>. There is no user account, no cloud database, and no server operated by us that stores your personal information.</li>
+  <li>The app contains <strong>no ads</strong> and <strong>no advertising or analytics SDKs</strong>.</li>
+  <li>Your data is never sold or shared with advertisers.</li>
+  <li>A small amount of <strong>technical diagnostic data</strong> (not your health data) is sent to a developer debugging tool — details below.</li>
+</ul>
+
+<h2>Data used on your devices</h2>
+<p>To do its job, the app reads and stores the following data locally, using Android's standard on-device storage (DataStore). None of it is uploaded to any account or cloud service:</p>
+<table>
+  <tr><th>Data</th><th>Purpose</th><th>Where it's stored</th></tr>
+  <tr><td>Heart rate (via Wear OS Health Services)</td><td>Detect when you've fallen asleep</td><td>Watch only, in memory during monitoring; a nightly resting-heart-rate summary is saved locally to calibrate future detection</td></tr>
+  <tr><td>Movement / accelerometer data</td><td>Detect stillness as part of sleep onset</td><td>Watch only, in memory during monitoring — not saved</td></tr>
+  <tr><td>Wrist-contact (off-body) sensor</td><td>Know whether the watch is being worn</td><td>Watch only, in memory during monitoring — not saved</td></tr>
+  <tr><td>Your configured resting heart rate / sleep schedule</td><td>Personalize sleep detection and monitoring hours</td><td>Watch, local settings storage</td></tr>
+  <tr><td>TV connection details (IP address, device name, pairing token)</td><td>Let the phone app turn your TV off</td><td>Phone, local settings storage</td></tr>
+</table>
+
+<h2>Technical diagnostic logs</h2>
+<p>
+To debug issues without needing physical access to a tester's devices during
+development, the app sends small, best-effort diagnostic events (e.g. "phone
+received a trigger from the watch", "TV reconnect succeeded", current
+battery percentage) to a webhook run on
+<a href="https://www.tines.com/" target="_blank" rel="noopener">Tines</a>, a
+workflow-automation service used here purely as a developer debugging log.
+</p>
+<p>Each diagnostic event contains only:</p>
+<ul>
+  <li>which part of the app sent it (watch or phone)</li>
+  <li>a short event name and human-readable technical detail (e.g. sensor status, connection outcome)</li>
+  <li>a timestamp</li>
+</ul>
+<p>
+These events <strong>never include</strong> your actual heart rate readings, your
+name, your Google account, your location, or any advertising identifier. As
+with any network request, the sending device's IP address is visible to
+that service, the same as it would be to any website you visit.
+</p>
+
+<h2>Permissions the app requests, and why</h2>
+<table>
+  <tr><th>Permission</th><th>Why</th></tr>
+  <tr><td>Body sensors (incl. background)</td><td>Read heart rate from Wear OS Health Services while monitoring, including while the screen is off</td></tr>
+  <tr><td>Activity recognition</td><td>Required by Android alongside body-sensor access on newer Wear OS versions</td></tr>
+  <tr><td>Notifications</td><td>Show the "monitoring active" status and TV-connection results</td></tr>
+  <tr><td>Local network access (phone only)</td><td>Discover and control your TV on your home Wi-Fi network</td></tr>
+  <tr><td>Exact alarms</td><td>Reliably start monitoring at your scheduled bedtime</td></tr>
+</table>
+
+<h2>Data deletion</h2>
+<p>
+Uninstalling the app removes all locally stored data immediately, since
+nothing is kept anywhere else. There is no account to delete because none
+is ever created.
+</p>
+
+<h2>Children's privacy</h2>
+<p>This app is not directed at children and is not intended for use by children.</p>
+
+<h2>Changes to this policy</h2>
+<p>If this policy changes, the "Last updated" date above will be revised. Since the app has no accounts, we cannot notify you individually — please check back here if you have concerns.</p>
+
+<div class="contact">
+  <strong>Questions?</strong><br>
+  Contact: <a href="mailto:snir2411@gmail.com">snir2411@gmail.com</a>
+</div>
+
+</body>
+</html>
