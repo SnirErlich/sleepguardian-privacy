@@ -94,7 +94,7 @@ shared with anyone else.
 <table>
   <tr><th>Permission</th><th>Why</th></tr>
   <tr><td>Heart rate and body sensors, including in the background (watch). Called "Body sensors" up to Android 15, and <code>READ_HEART_RATE</code> / <code>READ_HEALTH_DATA_IN_BACKGROUND</code> on Android 16 and later</td><td>Read your heart rate from the watch while monitoring, including while the screen is off. The app does not use Health Connect and does not read or write other apps' health data</td></tr>
-  <tr><td>Foreground service (watch: health type; phone: data sync)</td><td>Keep sleep monitoring running, with a visible notification, while you sleep; on the phone, briefly connect to your TV when the watch reports you fell asleep</td></tr>
+  <tr><td>Foreground service (watch: health type; phone: connected device)</td><td>Keep sleep monitoring running, with a visible notification, while you sleep; on the phone, briefly connect to your TV when the watch reports you fell asleep</td></tr>
   <tr><td>Keep the processor awake (watch)</td><td>Keep monitoring running overnight with the screen off</td></tr>
   <tr><td>Start at boot (watch)</td><td>Restore your daily monitoring schedule after the watch restarts</td></tr>
   <tr><td>Notifications</td><td>Show the "monitoring active" status and TV-connection results</td></tr>
