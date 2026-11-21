@@ -29,7 +29,7 @@
 <body>
 
 <h1>SleepGuardian — Privacy Policy</h1>
-<p class="updated">Last updated: September 2026</p>
+<p class="updated">Last updated: November 2026</p>
 
 <p>
 SleepGuardian is a two-part app (a Wear OS watch app and a companion phone
@@ -40,22 +40,28 @@ anything) ever leaves your devices.
 
 <h2>The short version</h2>
 <ul>
-  <li>All of your data stays <strong>on your own watch and phone</strong>. There is no user account, no cloud database, and no server operated by us that stores your personal information.</li>
+  <li>Your heart rate, movement data, sleep schedule and TV details stay <strong>on your own watch and phone</strong>. There is no user account, no cloud database, and no server operated by us that stores your personal information.</li>
   <li>The app contains <strong>no ads</strong> and <strong>no advertising or analytics SDKs</strong>.</li>
   <li>Your data is never sold or shared with advertisers.</li>
-  <li>A small amount of <strong>technical diagnostic data</strong> (not your health data) is sent to a developer debugging tool — details below.</li>
+  <li>A small amount of <strong>technical diagnostic data</strong> (never your heart-rate readings) is sent to a developer debugging tool — details below.</li>
 </ul>
 
 <h2>Data used on your devices</h2>
 <p>To do its job, the app reads and stores the following data locally, using Android's standard on-device storage (DataStore). None of it is uploaded to any account or cloud service:</p>
 <table>
   <tr><th>Data</th><th>Purpose</th><th>Where it's stored</th></tr>
-  <tr><td>Heart rate (via Wear OS Health Services)</td><td>Detect when you've fallen asleep</td><td>Watch only, in memory during monitoring; a nightly resting-heart-rate summary is saved locally to calibrate future detection</td></tr>
+  <tr><td>Heart rate (from the watch's heart-rate sensor, or via Wear OS Health Services on watches that don't expose the sensor directly)</td><td>Detect when you've fallen asleep</td><td>Watch only, in memory during monitoring; a nightly resting-heart-rate summary is saved locally to calibrate future detection</td></tr>
   <tr><td>Movement / accelerometer data</td><td>Detect stillness as part of sleep onset</td><td>Watch only, in memory during monitoring — not saved</td></tr>
   <tr><td>Wrist-contact (off-body) sensor</td><td>Know whether the watch is being worn</td><td>Watch only, in memory during monitoring — not saved</td></tr>
   <tr><td>Your configured resting heart rate / sleep schedule</td><td>Personalize sleep detection and monitoring hours</td><td>Watch, local settings storage</td></tr>
   <tr><td>TV connection details (IP address, device name, pairing token)</td><td>Let the phone app turn your TV off</td><td>Phone, local settings storage</td></tr>
 </table>
+<p>
+The watch and phone talk to each other over Bluetooth through Google Play
+services' Wearable Data Layer. These messages only carry the "sleep detected"
+trigger, setup and connection checks, and the TV result — no heart-rate or
+movement data.
+</p>
 
 <h2>Technical diagnostic logs</h2>
 <p>
@@ -68,36 +74,49 @@ workflow-automation service used here purely as a developer debugging log.
 </p>
 <p>Each diagnostic event contains only:</p>
 <ul>
-  <li>which part of the app sent it (watch or phone)</li>
-  <li>a short event name and human-readable technical detail (e.g. sensor status, connection outcome)</li>
+  <li>which part of the app sent it (watch or phone) and the app's version number</li>
+  <li>a short event name and human-readable technical detail (e.g. sensor status, connection outcome, or an error message, which can include the local network address of your TV or phone)</li>
   <li>a timestamp</li>
+  <li>for monitoring summaries: counts and percentages only (for example how many heart-rate readings arrived, what share of the time your heart rate was below the detection threshold, and what share of the time you were still), plus battery level and power-saving state</li>
+  <li>if the app crashes: a technical error report (stack trace)</li>
+  <li>your device model and Android version, which are sent automatically with every web request</li>
 </ul>
 <p>
 These events <strong>never include</strong> your actual heart rate readings, your
-name, your Google account, your location, or any advertising identifier. As
-with any network request, the sending device's IP address is visible to
-that service, the same as it would be to any website you visit.
+name, your Google account, your location, or any advertising identifier, and
+they are not linked to an account. As with any network request, the sending
+device's IP address is visible to that service, the same as it would be to any
+website you visit. The events are read only by the app's developer and are not
+shared with anyone else.
 </p>
 
 <h2>Permissions the app requests, and why</h2>
 <table>
   <tr><th>Permission</th><th>Why</th></tr>
-  <tr><td>Body sensors (incl. background)</td><td>Read heart rate from Wear OS Health Services while monitoring, including while the screen is off</td></tr>
-  <tr><td>Activity recognition</td><td>Required by Android alongside body-sensor access on newer Wear OS versions</td></tr>
+  <tr><td>Heart rate and body sensors, including in the background (watch). Called "Body sensors" up to Android 15, and <code>READ_HEART_RATE</code> / <code>READ_HEALTH_DATA_IN_BACKGROUND</code> on Android 16 and later</td><td>Read your heart rate from the watch while monitoring, including while the screen is off. The app does not use Health Connect and does not read or write other apps' health data</td></tr>
+  <tr><td>Activity recognition (watch)</td><td>Required by Android alongside body-sensor access on newer Wear OS versions</td></tr>
+  <tr><td>Foreground service (watch: health type; phone: data sync)</td><td>Keep sleep monitoring running, with a visible notification, while you sleep; on the phone, briefly connect to your TV when the watch reports you fell asleep</td></tr>
+  <tr><td>Keep the processor awake (watch)</td><td>Keep monitoring running overnight with the screen off</td></tr>
+  <tr><td>Start at boot (watch)</td><td>Restore your daily monitoring schedule after the watch restarts</td></tr>
   <tr><td>Notifications</td><td>Show the "monitoring active" status and TV-connection results</td></tr>
-  <tr><td>Local network access (phone only)</td><td>Discover and control your TV on your home Wi-Fi network</td></tr>
-  <tr><td>Exact alarms</td><td>Reliably start monitoring at your scheduled bedtime</td></tr>
+  <tr><td>Exact alarms (watch)</td><td>Reliably start monitoring at your scheduled bedtime</td></tr>
+  <tr><td>Internet and network state</td><td>Talk to your TV on your home network (phone), and send the diagnostic events described above</td></tr>
+  <tr><td>Wi-Fi state and multicast (phone)</td><td>Discover your TV on your home Wi-Fi network</td></tr>
+  <tr><td>Ignore battery optimizations (phone)</td><td>Let the phone react to your watch overnight even when the app is closed. You choose whether to allow it</td></tr>
 </table>
 
 <h2>Data deletion</h2>
 <p>
 Uninstalling the app removes all locally stored data immediately, since
 nothing is kept anywhere else. There is no account to delete because none
-is ever created.
+is ever created. Diagnostic events already received by the developer's
+debugging tool are not tied to your name or an account; if you would like
+them removed, email the address below with your device model and the
+approximate date, and we will do our best to find and delete them.
 </p>
 
 <h2>Children's privacy</h2>
-<p>This app is not directed at children and is not intended for use by children.</p>
+<p>This app is intended for adults (18 and over). It is not directed at children and is not intended for use by children.</p>
 
 <h2>Changes to this policy</h2>
 <p>If this policy changes, the "Last updated" date above will be revised. Since the app has no accounts, we cannot notify you individually — please check back here if you have concerns.</p>
