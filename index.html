@@ -75,9 +75,9 @@ workflow-automation service used here purely as a developer debugging log.
 <p>Each diagnostic event contains only:</p>
 <ul>
   <li>which part of the app sent it (watch or phone) and the app's version number</li>
-  <li>a short event name and human-readable technical detail (e.g. sensor status, connection outcome, or an error message, which can include the local network address of your TV or phone)</li>
+  <li>a short event name and human-readable technical detail (e.g. sensor status, connection outcome, or an error message; local network (IP) addresses are removed from these messages before they are sent)</li>
   <li>a timestamp</li>
-  <li>for monitoring summaries: counts and percentages only (for example how many heart-rate readings arrived, what share of the time your heart rate was below the detection threshold, and what share of the time you were still), plus battery level and power-saving state</li>
+  <li>for monitoring summaries: counts and percentages only (for example how many heart-rate readings arrived, and what share of the time you were still), plus battery level and power-saving state</li>
   <li>if the app crashes: a technical error report (stack trace)</li>
   <li>your device model and Android version, which are sent automatically with every web request</li>
 </ul>
@@ -94,7 +94,6 @@ shared with anyone else.
 <table>
   <tr><th>Permission</th><th>Why</th></tr>
   <tr><td>Heart rate and body sensors, including in the background (watch). Called "Body sensors" up to Android 15, and <code>READ_HEART_RATE</code> / <code>READ_HEALTH_DATA_IN_BACKGROUND</code> on Android 16 and later</td><td>Read your heart rate from the watch while monitoring, including while the screen is off. The app does not use Health Connect and does not read or write other apps' health data</td></tr>
-  <tr><td>Activity recognition (watch)</td><td>Required by Android alongside body-sensor access on newer Wear OS versions</td></tr>
   <tr><td>Foreground service (watch: health type; phone: data sync)</td><td>Keep sleep monitoring running, with a visible notification, while you sleep; on the phone, briefly connect to your TV when the watch reports you fell asleep</td></tr>
   <tr><td>Keep the processor awake (watch)</td><td>Keep monitoring running overnight with the screen off</td></tr>
   <tr><td>Start at boot (watch)</td><td>Restore your daily monitoring schedule after the watch restarts</td></tr>
